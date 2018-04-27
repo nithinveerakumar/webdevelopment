@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>cricle</title>
+	<link rel="stylesheet" type="text/css" href="asset\css\circle.css">	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.9/howler.js"></script>
+	<script type="text/javascript" src="asset\js\lib\paper-full.js"></script>
+	
+	<script type="text/paperscript" canvas="mycanvas">
+		var keyData = {
+		a: {
+		colour:"blue",
+		sound : new Howl({
+			src: ['asset/sound/bubbles.mp3']
+		})},
+		b:{
+		colour:"green",
+		sound : new Howl({
+		src: ['asset/sound/clay.mp3']
+		})},
+		c:{
+		colour:"red",
+		sound : new Howl({
+		src: ['asset/sound/ufo.mp3']
+		})}
+		}
+		var circle =[];
+		function onKeyDown(event)
+		{	if(keyData[event.key])
+			{
+				
+				var maxpoint = new Point (view.size.width,view.size.height);
+				var point = maxpoint * Point.random();
+				var animatedcircle=Path.Circle(point, 500)
+				animatedcircle.fillColor = keyData[event.key].colour;
+				keyData[event.key].sound.play();
+				circle.push(animatedcircle);
+			}
+
+		}
+		function onFrame(event)
+		{
+			for(var i = 0; i < circle.length; i++)
+			{
+				circle[i].fillColor.hue += 1;
+				circle[i].scale(.9);
+			}
+		}
+	
+	
+	</script>
+</head>
+<body>
+	<canvas id="mycanvas" resize></canvas>
+</body>
+</html>
